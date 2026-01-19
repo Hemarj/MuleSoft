@@ -1,0 +1,50 @@
+#%RAML 1.0
+title: Customer Contact API
+version: v1
+protocols: [ HTTP ]
+mediaType: application/json
+baseUri: http://localhost:8081/api
+
+traits:
+  errorResponses:
+    responses:
+      400:
+        body:
+          application/json:
+            example:
+              message: Bad Request
+      500:
+        body:
+          application/json:
+            example:
+              message: Internal Server Error
+
+types:
+  ContactRequest:
+    type: object
+    properties:
+      FirstName:
+        type: string
+        required: true
+      LastName:
+        type: string
+        required: true
+      Email:
+        type: string
+        required: true
+      Phone:
+        type: string
+        required: true
+
+/contacts:
+  post:
+    is: [ errorResponses ]
+    body:
+      application/json:
+        type: ContactRequest
+    responses:
+      201:
+        body:
+          application/json:
+            example:
+              message: Contact created successfully

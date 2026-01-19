@@ -1,0 +1,9 @@
+http:
+  port: "8082"
+
+sfdc:
+  clientId: "3MVG9k02hQhyUgQASyhKXwgye1JVyfP8Rcr_Iox7XjBSwMj6IZrn6KND4DVPOpcNgn54kZjD5L9xGMjglL67O"
+  clientSecret: "3EA4B82A06E961F6502BAECE5BD0482A6281709508C82F61318FE02E680CDD19"
+  username: "hemawipro@sf.co"
+  password: "8179Lilly"
+  securityToken: "wZKbbq8kTHrHa3XDhxGNGOsXc"
