@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="f7d030d6-7ab2-4bd7-96ee-aaf9b9243a63" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="dataweave-hands-on-pocFlow" doc:id="7d843aa5-1ae1-4c2b-abb5-019762d2e5f8" >
+		<http:listener doc:name="Listener" doc:id="4c473e9f-dd91-4e21-86ef-d78bd49a7937" config-ref="HTTP_Listener_config" path="/transform/issues"/>
+		<ee:transform doc:name="Transform Message" doc:id="df6e1e6e-392e-4474-ba47-107ce75feeba" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+  finalOutput: payload map(item) -> {
+    Key: item."Issue Key",
+    "type": item."Issue Type",
+    Summary: item.Summary,
+    Assignee: item.Assignee,
+    Status: item.Status,
+    Priority: item.Priority,
+    activityCompleted: item.Resolution
+  }
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
